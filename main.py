@@ -1,6 +1,10 @@
+from keysorters import KeySorter
+
+
 class ConfigurationContructor:
     tab = '  '
     filePath = ''
+    keyDelimiter = '_'
 
     def resolveKeymap(self, mapName):
         return ""
@@ -10,6 +14,10 @@ class ConfigurationContructor:
         if not res:
             raise Exception('error')
         return res
+
+    def createKey(self, inp):
+        comp = KeySorter().compare
+        return self.keyDelimiter.join(sorted(inp, comp))
 
     def findVal(self, c):
         if len(c.lstrip().split(':')) > 1:
@@ -46,7 +54,7 @@ class ConfigurationContructor:
             if len(currentKey) > indent_level and not previousVal:
                 raise EmptyLeafValue(c)
             if len(currentKey) > indent_level and previousVal:
-                result["".join(currentKey)] = previousVal
+                result[self.createKey(currentKey)] = previousVal
             currentKey = currentKey[:indent_level]
             currentKey.append(k)
             previousVal = self.findVal(c)
@@ -55,7 +63,6 @@ class ConfigurationContructor:
             result["".join(currentKey)] = previousVal
         else:
             raise EmptyLeafValue(c)
-
         return result
 
 

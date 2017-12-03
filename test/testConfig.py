@@ -1,4 +1,6 @@
 import unittest
+
+from keysorters import *
 import main
 
 
@@ -25,6 +27,12 @@ class testConfigCreator(unittest.TestCase):
         assert c.indentLevel('    a') == 2
         assert c.indentLevel('  a') == 1
         assert c.indentLevel('a') == 0
+
+    def test_compare(self):
+        c = KeySorter()
+        assert c.compare('ctrl', 'alt') > 0
+        assert c.compare('ctrl', 'ctrl') == 0
+        assert c.compare('alt', 'ctrl') < 0
 
 if __name__ == '__main__':
     unittest.main()
