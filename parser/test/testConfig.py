@@ -1,7 +1,8 @@
 import unittest
 
-from keysorters import *
-import main
+from parser.keysorters import *
+from parser import \
+    main
 
 
 class testConfigCreator(unittest.TestCase):
@@ -21,12 +22,14 @@ class testConfigCreator(unittest.TestCase):
 
     def test_emptyLeaf(self):
         constructor = main.ConfigurationContructor('  ', 'confError2.yml')
-        with self.assertRaises(main.EmptyLeafValue):
+        with self.assertRaises(
+                main.EmptyLeafValue):
             result = constructor.createConfig()
 
     def test_NonLeaf(self):
         constructor = main.ConfigurationContructor('  ', 'confError.yml')
-        with self.assertRaises(main.NonLeafValue):
+        with self.assertRaises(
+                main.NonLeafValue):
             result = constructor.createConfig()
 
     def test_indentlevel(self):
